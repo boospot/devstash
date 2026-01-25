@@ -89,6 +89,7 @@ async function main() {
       description: 'Reusable React patterns and hooks',
       userId: demoUser.id,
       defaultTypeId: itemTypeMap['snippet'],
+      isFavorite: true,
     },
   })
   console.log(`   ✓ ${reactPatternsCollection.name}`)
@@ -99,6 +100,7 @@ async function main() {
       description: 'AI prompts and workflow automations',
       userId: demoUser.id,
       defaultTypeId: itemTypeMap['prompt'],
+      isFavorite: true,
     },
   })
   console.log(`   ✓ ${aiWorkflowsCollection.name}`)
