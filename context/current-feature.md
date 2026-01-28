@@ -1,28 +1,18 @@
 # Current Feature
 
-Code Quality Quick Wins - Address low-risk issues from codebase audit including N+1 query fix, code deduplication, and missing UI states.
+<!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+<!-- Not Started | In Progress | Completed -->
 
 ## Goals
 
-1. **Fix N+1 Query in Collections** - Refactor `getRecentCollections` and `getSidebarCollections` to limit nested item fetching using Prisma's `take` on relations (no raw SQL)
-2. **Add Database Indexes** - Add indexes on `isPinned`, `isFavorite`, and `updatedAt` fields for common query patterns
-3. **Create Shared ICON_MAP** - Move duplicate icon mapping from sidebar.tsx, mobile-sidebar.tsx, and collection-card.tsx to `/src/lib/constants/item-types.ts`
-4. **Create Shared Date Utility** - Move `formatDate` function from item-card.tsx to `/src/lib/utils/date.ts`
-5. **Add Loading State** - Create `/src/app/dashboard/loading.tsx` with skeleton UI
-6. **Add Error Boundary** - Create `/src/app/dashboard/error.tsx` for graceful error handling
-7. **Add Query Limit Validation** - Cap limit parameters in database functions to prevent abuse
-8. **Fix Unsafe Icon Type Assertion** - Add fallback icon when icon name not found in ICON_MAP
+<!-- Goals and requirements -->
 
 ## Notes
 
-- These are all low-risk changes identified from the codebase audit
-- Authentication is a separate feature and will be implemented later
-- Stick to Prisma conventions - no raw SQL queries
-- Keep mock-data.ts for reference/testing purposes
+<!-- Any extra notes -->
 
 ## History
 
@@ -36,3 +26,4 @@ In Progress
 - **Dashboard Items** - Real database data for pinned and recent items, item type icons/colors, tags display, server component data fetching with Prisma (Completed)
 - **Stats & Sidebar** - Real database data for stats cards and sidebar, item types with counts and custom ordering, favorite/recent collections with colored indicators, "View all collections" link (Completed)
 - **Pro Badge Sidebar** - PRO badge on Files and Images item types in desktop and mobile sidebars using ShadCN Badge component (Completed)
+- **Code Quality Quick Wins** - N+1 query fix using Prisma _count and take, database indexes for common queries, shared ICON_MAP with fallback, shared date utility, dashboard loading/error states, query limit validation (Completed)
