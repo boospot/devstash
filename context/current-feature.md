@@ -1,40 +1,18 @@
-# Current Feature: Auth Credentials - Email/Password Provider
+# Current Feature
 
-Add Credentials provider for email/password authentication with registration.
+<!-- Feature name and short description -->
 
 ## Status
 
-In Progress
+<!-- Not Started | In Progress | Completed -->
 
 ## Goals
 
-- Use bcryptjs for hashing (already installed)
-- Add password field to User model via migration if not already there
-- Update `auth.config.ts` with Credentials provider placeholder
-- Update `auth.ts` to override Credentials with bcrypt validation
-- Create registration API route at `/api/auth/register`
-  - Accept: name, email, password, confirmPassword
-  - Validate passwords match
-  - Check if user already exists
-  - Hash password with bcryptjs
-  - Create user in database
-  - Return success/error response
+<!-- Goals and requirements -->
 
 ## Notes
 
-### Credentials Provider Split Pattern
-- `auth.config.ts`: Add Credentials provider with `authorize: () => null` placeholder
-- `auth.ts`: Override the Credentials provider with actual bcrypt validation logic
-
-### Testing
-1. Test registration via curl
-2. Go to `/api/auth/signin`
-3. Sign in with email/password
-4. Verify redirect to `/dashboard`
-5. Verify GitHub OAuth still works
-
-### Reference
-- Credentials provider: https://authjs.dev/getting-started/authentication/credentials
+<!-- Any extra notes -->
 
 ## History
 
@@ -50,3 +28,4 @@ In Progress
 - **Pro Badge Sidebar** - PRO badge on Files and Images item types in desktop and mobile sidebars using ShadCN Badge component (Completed)
 - **Code Quality Quick Wins** - N+1 query fix using Prisma _count and take, database indexes for common queries, shared ICON_MAP with fallback, shared date utility, dashboard loading/error states, query limit validation (Completed)
 - **Auth Setup Phase 1** - NextAuth v5 with GitHub OAuth, split auth config for edge compatibility, Prisma adapter with JWT strategy, /dashboard route protection via proxy, Session type with user.id (Completed)
+- **Auth Setup Phase 2** - Credentials provider with email/password, bcrypt validation, /api/auth/register endpoint with validation (Completed)
