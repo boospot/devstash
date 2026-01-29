@@ -27,3 +27,5 @@ When using the Neon MCP tools:
 - **Database:** `neondb`
 
 **IMPORTANT:** Always use the development branch for all database operations. Never run queries against the production branch (`br-flat-butterfly-ah9tlloi`) unless explicitly instructed to do so.
+
+**IMPORTANT:** Do not add Claude to any commit messages
