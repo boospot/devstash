@@ -1,18 +1,16 @@
 # Current Feature
 
-<!-- Feature name and short description -->
-
 ## Status
 
-<!-- Not Started | In Progress | Completed -->
+Not Started
 
 ## Goals
 
-<!-- Goals and requirements -->
+<!-- Add feature goals here -->
 
 ## Notes
 
-<!-- Any extra notes -->
+<!-- Add notes and constraints here -->
 
 ## History
 
@@ -30,3 +28,4 @@
 - **Auth Setup Phase 1** - NextAuth v5 with GitHub OAuth, split auth config for edge compatibility, Prisma adapter with JWT strategy, /dashboard route protection via proxy, Session type with user.id (Completed)
 - **Auth Setup Phase 2** - Credentials provider with email/password, bcrypt validation, /api/auth/register endpoint with validation (Completed)
 - **Auth Setup Phase 3** - Custom sign-in and register pages, reusable UserAvatar component with image/initials fallback, sidebar user dropdown with profile link and sign out, Sonner toast notifications, dashboard uses authenticated session (Completed)
+- **Email Verification** - Resend SDK integration, verification tokens on registration, verification emails, /api/auth/verify endpoint, /verify-email page, sign-in blocking for unverified users, resend functionality, edge case handling (Completed)
