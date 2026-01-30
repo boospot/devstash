@@ -11,6 +11,9 @@ import type { NextAuthConfig } from 'next-auth'
  * The actual bcrypt validation is in auth.ts which overrides this.
  */
 export default {
+  pages: {
+    signIn: '/sign-in',
+  },
   providers: [
     GitHub,
     Credentials({
