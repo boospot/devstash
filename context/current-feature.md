@@ -1,16 +1,24 @@
-# Current Feature
+# Current Feature: Email Verification Toggle
 
 ## Status
 
-Not Started
+In Progress
 
 ## Goals
 
-<!-- Add feature goals here -->
+- Add environment variable `SKIP_EMAIL_VERIFICATION` to control email verification behavior
+- When `SKIP_EMAIL_VERIFICATION=true`, skip sending verification emails and auto-verify users on registration
+- When disabled or not set, email verification works as currently implemented
+- Update registration flow to check the toggle
+- Update sign-in flow to skip verification check when toggle is enabled
+- Document the environment variable in `.env.example`
 
 ## Notes
 
-<!-- Add notes and constraints here -->
+- Currently no domain is linked to Resend, so only the Resend test email can receive verification emails
+- This toggle allows local development and testing without a verified domain
+- Environment variable approach keeps the feature simple and follows existing patterns in the codebase
+- Default behavior (no env var set) should require verification to maintain security in production
 
 ## History
 
