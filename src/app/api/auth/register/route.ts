@@ -1,55 +1,55 @@
-import { NextResponse } from 'next/server'
-import bcrypt from 'bcryptjs'
-import { prisma } from '@/lib/prisma'
-import { generateVerificationToken } from '@/lib/tokens'
-import { sendVerificationEmail } from '@/lib/email'
+import { NextResponse } from 'next/server';
+import bcrypt from 'bcryptjs';
+import { prisma } from '@/lib/prisma';
+import { generateVerificationToken } from '@/lib/tokens';
+import { sendVerificationEmail } from '@/lib/email';
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json()
-    const { name, email, password, confirmPassword } = body
+    const body = await request.json();
+    const { name, email, password, confirmPassword } = body;
 
     // Validate required fields
     if (!email || !password || !confirmPassword) {
       return NextResponse.json(
         { error: 'Email, password, and confirm password are required' },
-        { status: 400 }
-      )
+        { status: 400 },
+      );
     }
 
     // Validate passwords match
     if (password !== confirmPassword) {
       return NextResponse.json(
         { error: 'Passwords do not match' },
-        { status: 400 }
-      )
+        { status: 400 },
+      );
     }
 
     // Validate password length
     if (password.length < 8) {
       return NextResponse.json(
         { error: 'Password must be at least 8 characters' },
-        { status: 400 }
-      )
+        { status: 400 },
+      );
     }
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email },
-    })
+    });
 
     if (existingUser) {
       return NextResponse.json(
         { error: 'User with this email already exists' },
-        { status: 400 }
-      )
+        { status: 400 },
+      );
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10)
+    const hashedPassword = await bcrypt.hash(password, 12);
 
     // Check if email verification should be skipped
-    const skipVerification = process.env.SKIP_EMAIL_VERIFICATION === 'true'
+    const skipVerification = process.env.SKIP_EMAIL_VERIFICATION === 'true';
 
     // Create user (emailVerified is set if skipping verification)
     const user = await prisma.user.create({
@@ -59,12 +59,12 @@ export async function POST(request: Request) {
         password: hashedPassword,
         emailVerified: skipVerification ? new Date() : null,
       },
-    })
+    });
 
     // Generate verification token and send email (unless skipped)
     if (!skipVerification) {
-      const token = await generateVerificationToken(email)
-      await sendVerificationEmail(email, token)
+      const token = await generateVerificationToken(email);
+      await sendVerificationEmail(email, token);
     }
 
     return NextResponse.json(
@@ -79,13 +79,13 @@ export async function POST(request: Request) {
           email: user.email,
         },
       },
-      { status: 201 }
-    )
+      { status: 201 },
+    );
   } catch (error) {
-    console.error('Registration error:', error)
+    console.error('Registration error:', error);
     return NextResponse.json(
       { error: 'An error occurred during registration' },
-      { status: 500 }
-    )
+      { status: 500 },
+    );
   }
 }
