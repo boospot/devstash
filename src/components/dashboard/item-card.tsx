@@ -12,9 +12,13 @@ interface ItemCardProps {
 export default function ItemCard({ item }: ItemCardProps) {
   const IconComponent = getItemTypeIcon(item.itemType.icon);
   const iconColor = item.itemType.color;
+  const borderStyle = { borderLeftColor: iconColor, borderLeftWidth: '3px' };
 
   return (
-    <Card className="bg-card border-border hover:border-muted-foreground/50 transition-colors">
+    <Card
+      className="bg-card border-border hover:border-muted-foreground/50 transition-colors"
+      style={borderStyle}
+    >
       <CardContent className="flex items-start gap-4 p-4">
         <div
           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
