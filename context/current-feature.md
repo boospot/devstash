@@ -1,29 +1,16 @@
-# Current Feature: Item Drawer
+# Current Feature
 
 ## Status
 
-In Progress
+Not Started
 
 ## Goals
 
-- Right-side slide-in drawer using shadcn Sheet component that opens when clicking an ItemCard
-- Works on both dashboard and items list pages
-- Action bar with Favorite (star, yellow when active), Pin, Copy, Edit (pencil), and Delete (trash, right-aligned)
-- Client wrapper component to manage drawer state (pages are server components)
-- Full item detail fetched on click via API route (`/api/items/[id]`), no page navigation
-- Query function in `lib/db/items.ts`, API route with auth check
-- Skeleton/loading state while fetching
-- Display: item type icon + title, type badge, language badge, description, content (with code block for snippets), tags, collections, created/updated dates
-- Focus on detail display only — code editor and item-specific features come later
+<!-- Add feature goals here -->
 
 ## Notes
 
-- Card data (title, description, tags) already fetched by server components
-- Full item detail (content, collections, language, etc.) fetched on click via API
-- Reference screenshot: `context/screenshots/dashboard-ui-drawer.png`
-- Drawer header: type icon + title, type badge, language badge
-- Action bar: Favorite | Pin | Copy | Edit ... Delete (right-aligned with gap)
-- Content sections: Description, Content (code block with line numbers for text types), Tags, Collections, Details (created/updated dates)
+<!-- Add notes and constraints here -->
 
 ## History
 
@@ -49,3 +36,4 @@ In Progress
 - **Items List View** - Dynamic route /items/[type] for type-filtered item lists, getItemsByType query with pinned-first sorting, responsive two-column grid using existing ItemCard, type validation with 404, empty state (Completed)
 - **Vitest Setup** - Vitest for unit testing server actions and utilities (not components), co-located test files, sample date utility tests, updated workflow and coding standards docs (Completed)
 - **Items List Three-Column Layout** - Changed items grid from 2 to 3 columns on lg breakpoint, responsive 1/2/3 column layout (Completed)
+- **Item Drawer** - Right-side slide-in drawer using shadcn Sheet, opens on ItemCard click, fetches full item detail via /api/items/[id] with auth, displays type icon/badges, action bar (Favorite/Pin/Copy/Edit/Delete), content with line numbers, tags, collections, dates, loading skeleton, ItemDrawerProvider context in DashboardLayout, getItemById query with ownership check, unit tests (Completed)
