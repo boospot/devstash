@@ -61,7 +61,7 @@ export default async function ItemsPage({ params }: ItemsPageProps) {
 
         {/* Items Grid */}
         {items.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {items.map((item) => (
               <ItemCard key={item.id} item={item} />
             ))}
