@@ -9,6 +9,7 @@ interface ItemDrawerContextValue {
   isLoading: boolean;
   openDrawer: (itemId: string) => void;
   closeDrawer: () => void;
+  setItem: (item: ItemDetail) => void;
 }
 
 const ItemDrawerContext = createContext<ItemDrawerContextValue | null>(null);
@@ -54,9 +55,13 @@ export default function ItemDrawerProvider({
     setItem(null);
   }, []);
 
+  const updateItem = useCallback((updatedItem: ItemDetail) => {
+    setItem(updatedItem);
+  }, []);
+
   return (
     <ItemDrawerContext.Provider
-      value={{ isOpen, item, isLoading, openDrawer, closeDrawer }}
+      value={{ isOpen, item, isLoading, openDrawer, closeDrawer, setItem: updateItem }}
     >
       {children}
     </ItemDrawerContext.Provider>
