@@ -3,6 +3,7 @@ import { auth } from '@/auth';
 import { prisma } from '@/lib/prisma';
 import DashboardLayout from '@/components/layout/dashboard-layout';
 import ItemCard from '@/components/dashboard/item-card';
+import ItemsPageHeader from '@/components/items/items-page-header';
 import { getSidebarCollections } from '@/lib/db/collections';
 import { getItemsByType, getItemTypesWithCounts, VALID_ITEM_TYPES } from '@/lib/db/items';
 
@@ -52,12 +53,11 @@ export default async function ItemsPage({ params }: ItemsPageProps) {
     >
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">{displayName}</h1>
-          <p className="text-muted-foreground">
-            {items.length} {items.length === 1 ? 'item' : 'items'}
-          </p>
-        </div>
+        <ItemsPageHeader
+          typeName={typeName}
+          displayName={displayName}
+          itemCount={items.length}
+        />
 
         {/* Items Grid */}
         {items.length > 0 ? (
