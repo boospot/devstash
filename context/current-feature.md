@@ -2,29 +2,15 @@
 
 ## Status
 
-In Progress
+Not Started
 
 ## Goals
 
-Security and performance fixes identified from codebase audit:
-
-1. **Bcrypt Rounds Consistency** - Standardize password hashing to 12 rounds across all auth endpoints (change-password and reset-password currently use 10, registration uses 12)
-
-2. **Debounce Resize Effect** - Add debounce to markdown-editor.tsx useEffect that auto-resizes textarea on every keystroke
-
-3. **URL Protocol Validation** - Add Zod refinement to validate URLs use http/https protocol only (prevent javascript: and data: URLs)
-
-4. **Next.js Image Optimization** - Replace native `<img>` tags with `next/image` for R2-hosted images (image-thumbnail-card.tsx, item-drawer.tsx, file-upload.tsx), configure remote patterns in next.config.ts
-
-5. **Upload Rate Limiting** - Add rate limiting to /api/upload endpoint (10 uploads per hour per user)
+<!-- Add feature goals here -->
 
 ## Notes
 
-- Bcrypt: Only change the salt rounds number, no other modifications needed
-- Debounce: Use 100ms delay with cleanup function
-- URL validation: Add to updateItemSchema and createItemSchema in actions/items.ts
-- next/image: Need to add R2 domain to remotePatterns in next.config.ts
-- Rate limiting: Reuse existing rate-limit utility from src/lib/rate-limit.ts
+<!-- Add notes and constraints here -->
 
 ## History
 
@@ -61,3 +47,4 @@ Security and performance fixes identified from codebase audit:
 - **Image Gallery View** - ImageThumbnailCard component with 16:9 aspect ratio thumbnails using aspect-video, object-cover for image filling, 5% scale hover zoom effect with 300ms transition, fileUrl added to ItemWithType interface, conditionally renders for image type on items page (Completed)
 - **File List View** - FileListRow component with file extension icons, single-column list layout for /items/files (Google Drive style), each row shows file icon/title/name/size/date/download button, row hover highlight, click opens ItemDrawer, download via /api/download, mobile responsive stacking, ItemWithType extended with fileName/fileSize (Completed)
 - **Quick Copy Button** - Copy icon on item cards that appears on hover, copies content for text items or URL for links, green checkmark feedback (Completed)
+- **Security & Performance Audit Fixes** - Bcrypt rounds standardized to 12, debounced markdown editor resize, URL protocol validation (http/https only), next/image for R2 images with remote patterns config, upload rate limiting (10/hour per user) (Completed)
