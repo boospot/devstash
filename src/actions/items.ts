@@ -20,6 +20,7 @@ const updateItemSchema = z.object({
   tags: z.array(z.string().trim()).transform((tags) =>
     tags.filter((tag) => tag.length > 0)
   ),
+  collectionIds: z.array(z.string()).optional(),
 });
 
 export type UpdateItemInput = z.infer<typeof updateItemSchema>;
@@ -94,6 +95,7 @@ const createItemSchema = z.object({
   tags: z.array(z.string().trim()).transform((tags) =>
     tags.filter((tag) => tag.length > 0)
   ),
+  collectionIds: z.array(z.string()).optional(),
   fileUrl: safeUrlSchema,
   fileName: z.string().nullable().optional().transform((val) => val || null),
   fileSize: z.number().int().positive().nullable().optional().transform((val) => val || null),

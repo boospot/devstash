@@ -38,9 +38,11 @@ import { useItemDrawer } from "./item-drawer-provider";
 import { useClipboard } from "@/hooks/use-clipboard";
 import { toast } from "sonner";
 import { updateItem, deleteItem } from "@/actions/items";
+import { getUserCollections } from "@/actions/collections";
 import DeleteItemDialog from "./delete-item-dialog";
 import CodeEditor from "./code-editor";
 import MarkdownEditor from "./markdown-editor";
+import CollectionPicker, { type CollectionOption } from "./collection-picker";
 
 function DrawerSkeleton() {
   return (
@@ -96,6 +98,8 @@ export default function ItemDrawer() {
   const [url, setUrl] = useState("");
   const [language, setLanguage] = useState("");
   const [tags, setTags] = useState("");
+  const [collections, setCollections] = useState<CollectionOption[]>([]);
+  const [selectedCollectionIds, setSelectedCollectionIds] = useState<string[]>([]);
 
   // Reset form when item changes or edit mode is entered
   useEffect(() => {
@@ -106,6 +110,7 @@ export default function ItemDrawer() {
       setUrl(item.url || "");
       setLanguage(item.language || "");
       setTags(item.tags.join(", "));
+      setSelectedCollectionIds(item.collections.map((c) => c.id));
     }
   }, [item]);
 
@@ -122,7 +127,12 @@ export default function ItemDrawer() {
     copy(textToCopy);
   };
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
+    // Fetch collections for the picker
+    const result = await getUserCollections();
+    if (result.success && result.data) {
+      setCollections(result.data);
+    }
     setIsEditing(true);
   };
 
@@ -135,6 +145,7 @@ export default function ItemDrawer() {
       setUrl(item.url || "");
       setLanguage(item.language || "");
       setTags(item.tags.join(", "));
+      setSelectedCollectionIds(item.collections.map((c) => c.id));
     }
     setIsEditing(false);
   };
@@ -156,6 +167,7 @@ export default function ItemDrawer() {
         url: url || null,
         language: language || null,
         tags: tagsArray,
+        collectionIds: selectedCollectionIds,
       });
 
       if (result.success && result.data) {
@@ -436,31 +448,21 @@ export default function ItemDrawer() {
                     </div>
                   </div>
 
-                  {/* Non-editable info in edit mode */}
-                  <Separator />
-
-                  {/* Collections (display only) */}
-                  {item.collections.length > 0 && (
-                    <div>
-                      <div className="flex items-center gap-1.5 mb-2">
-                        <FolderOpen className="h-3.5 w-3.5 text-muted-foreground" />
-                        <p className="text-sm font-medium text-muted-foreground">
-                          Collections
-                        </p>
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {item.collections.map((collection) => (
-                          <Badge
-                            key={collection.id}
-                            variant="secondary"
-                            className="text-xs"
-                          >
-                            {collection.name}
-                          </Badge>
-                        ))}
-                      </div>
+                  {/* Collections (editable) */}
+                  {collections.length > 0 && (
+                    <div className="space-y-2">
+                      <Label>Collections</Label>
+                      <CollectionPicker
+                        collections={collections}
+                        selectedIds={selectedCollectionIds}
+                        onChange={setSelectedCollectionIds}
+                        disabled={isSaving}
+                      />
                     </div>
                   )}
+
+                  {/* Non-editable info in edit mode */}
+                  <Separator />
 
                   {/* Details (display only) */}
                   <div>
