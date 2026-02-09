@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import DashboardLayout from '@/components/layout/dashboard-layout';
 import ItemCard from '@/components/dashboard/item-card';
 import ImageThumbnailCard from '@/components/items/image-thumbnail-card';
+import FileListRow from '@/components/items/file-list-row';
 import ItemsPageHeader from '@/components/items/items-page-header';
 import { getSidebarCollections } from '@/lib/db/collections';
 import { getItemsByType, getItemTypesWithCounts, VALID_ITEM_TYPES } from '@/lib/db/items';
@@ -60,17 +61,27 @@ export default async function ItemsPage({ params }: ItemsPageProps) {
           itemCount={items.length}
         />
 
-        {/* Items Grid */}
+        {/* Items Grid/List */}
         {items.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {items.map((item) =>
-              typeName === 'image' ? (
-                <ImageThumbnailCard key={item.id} item={item} />
-              ) : (
-                <ItemCard key={item.id} item={item} />
-              )
-            )}
-          </div>
+          typeName === 'file' ? (
+            // Single-column list for files
+            <div className="flex flex-col gap-2">
+              {items.map((item) => (
+                <FileListRow key={item.id} item={item} />
+              ))}
+            </div>
+          ) : (
+            // Grid for images and other types
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {items.map((item) =>
+                typeName === 'image' ? (
+                  <ImageThumbnailCard key={item.id} item={item} />
+                ) : (
+                  <ItemCard key={item.id} item={item} />
+                )
+              )}
+            </div>
+          )
         ) : (
           <div className="rounded-lg border border-border bg-card p-8 text-center">
             <p className="text-muted-foreground">

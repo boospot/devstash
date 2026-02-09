@@ -29,6 +29,8 @@ export interface ItemWithType {
   itemType: ItemType;
   tags: string[];
   fileUrl: string | null;
+  fileName: string | null;
+  fileSize: number | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -145,6 +147,8 @@ export async function getPinnedItems(userId: string): Promise<ItemWithType[]> {
     },
     tags: item.tags.map((tag) => tag.name),
     fileUrl: item.fileUrl,
+    fileName: item.fileName,
+    fileSize: item.fileSize,
     createdAt: item.createdAt,
     updatedAt: item.updatedAt,
   }));
@@ -185,6 +189,8 @@ export async function getRecentItems(
     },
     tags: item.tags.map((tag) => tag.name),
     fileUrl: item.fileUrl,
+    fileName: item.fileName,
+    fileSize: item.fileSize,
     createdAt: item.createdAt,
     updatedAt: item.updatedAt,
   }));
@@ -234,6 +240,8 @@ export async function getItemsByType(
     },
     tags: item.tags.map((tag) => tag.name),
     fileUrl: item.fileUrl,
+    fileName: item.fileName,
+    fileSize: item.fileSize,
     createdAt: item.createdAt,
     updatedAt: item.updatedAt,
   }));
