@@ -2,15 +2,33 @@
 
 ## Status
 
-Not Started
+In Progress
 
 ## Goals
 
-<!-- Add feature goals here -->
+Code refactoring to reduce duplication and improve maintainability:
+
+1. **useClipboard Hook** - Extract copy-to-clipboard logic from item-drawer, code-editor, markdown-editor into reusable hook at src/hooks/use-clipboard.ts
+
+2. **Data Mapping Utilities** - Extract toItemWithType() and toItemDetail() transform functions in src/lib/db/items.ts to eliminate 4x duplicate mapping logic
+
+3. **Zod Field Error Parser** - Extract parseZodErrors() utility from items actions to shared location at src/lib/validation.ts
+
+4. **Editor Header Component** - Extract shared header (macOS dots, label, copy button) from code-editor and markdown-editor into EditorHeader component
+
+5. **Collection Type Counting** - Extract getDominantColor() and countItemTypes() utilities from collections.ts to eliminate duplicate logic
+
+6. **Date Formatting** - Add formatItemDates() to existing date.ts utility for consistent "Created/Updated" display
 
 ## Notes
 
-<!-- Add notes and constraints here -->
+- useClipboard: Returns { copied, copy } - used in 3 components
+- Data mapping: toItemWithType used in getPinnedItems, getRecentItems, getItemsByType; toItemDetail used in getItemById, updateItem
+- Zod errors: Same field error extraction pattern in updateItem and createItem actions
+- EditorHeader: Both editors have identical macOS dot header with label and copy button
+- Type counting: Nearly identical logic in getRecentCollections and getSidebarCollections
+- Keep changes minimal - extract without changing behavior
+- Run tests after each extraction to verify no regressions
 
 ## History
 
