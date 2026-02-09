@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   Sheet,
   SheetContent,
@@ -554,12 +555,13 @@ export default function ItemDrawer() {
                         {isImage ? "Image" : "File"}
                       </p>
                       {isImage ? (
-                        <div className="rounded-lg border border-border overflow-hidden bg-muted/30">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
+                        <div className="rounded-lg border border-border overflow-hidden bg-muted/30 relative h-80">
+                          <Image
                             src={item.fileUrl}
                             alt={item.fileName || item.title}
-                            className="max-w-full h-auto max-h-80 object-contain mx-auto"
+                            fill
+                            sizes="(max-width: 768px) 100vw, 500px"
+                            className="object-contain"
                           />
                         </div>
                       ) : (

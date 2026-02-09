@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import Image from "next/image";
 import { Upload, X, File, Image as ImageIcon, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FILE_CONSTRAINTS, formatFileSize } from "@/lib/r2";
@@ -178,11 +179,12 @@ export default function FileUpload({
         <div className="flex items-start gap-3">
           {isImage ? (
             <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md bg-muted">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={uploadedFile.fileUrl}
                 alt={uploadedFile.fileName}
-                className="h-full w-full object-cover"
+                fill
+                sizes="64px"
+                className="object-cover"
               />
             </div>
           ) : (
