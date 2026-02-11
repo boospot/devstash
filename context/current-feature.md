@@ -1,26 +1,16 @@
-# Current Feature: Pinned Items
+# Current Feature
 
 ## Status
 
-In Progress
+Not Started
 
 ## Goals
 
-- Create toggleItemPin server action with ownership check and Zod validation
-- Make Pin button in ItemDrawer clickable (exists but has no onClick)
-- Optimistic UI updates for instant feedback on pin/unpin
-- Toast notification on success/error
-- Pinned items sort to top of item listings
-- Follow the existing Favorite Button pattern
-- Items only (not collections)
-- Pin icon on ItemCard remains as static indicator
+<!-- Add feature goals here -->
 
 ## Notes
 
-- Follow the same pattern used for toggleItemFavorite
-- The Pin button already exists in the ItemDrawer action bar but is not wired up
-- Dashboard already has a pinned items section that should reflect pinned state
-- getItemsByType query already sorts pinned items first
+<!-- Add notes and constraints here -->
 
 ## History
 
@@ -75,3 +65,4 @@ In Progress
 - **Global Search / Command Palette** - Cmd+K/Ctrl+K opens command palette, search across items and collections, grouped results with type icons and item counts, keyboard navigation, TopBar search trigger, SearchProvider context with data pre-fetching, stricter substring matching, 7 new unit tests (Completed)
 - **Pagination** - Reusable Pagination component with numbered pages and prev/next buttons, pagination on /items/[type], /collections, and /collections/[id] pages, server-side pagination with skip/take, pagination constants (ITEMS_PER_PAGE=21, COLLECTIONS_PER_PAGE=21), dashboard limits (DASHBOARD_COLLECTIONS_LIMIT=6, DASHBOARD_RECENT_ITEMS_LIMIT=10) (Completed)
 - **Favorites Sorting** - Client-side sorting on /favorites page, FavoritesItemList component with sort by Name/Date/Type, FavoritesCollectionList component with sort by Name/Date, shadcn Select dropdowns with compact monospace styling, useMemo for sorted lists, default sort by newest (Completed)
+- **Pinned Items** - toggleItemPin db query and server action with ownership check and Zod validation, wired up ItemDrawer pin button with optimistic state update, blue highlight when pinned, toast feedback, router.refresh(), 5 new unit tests (Completed)
