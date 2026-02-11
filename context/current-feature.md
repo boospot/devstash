@@ -1,23 +1,21 @@
-# Current Feature: Favorite Toggle
+# Current Feature
 
 ## Status
 
-In Progress
+Not Started
 
 ## Goals
 
-- Wire up favorite toggle on items (ItemDrawer) and collections (CollectionCard dropdown, CollectionActions button)
-- Add toggleItemFavorite and toggleCollectionFavorite db queries and server actions
-- Toast feedback, router.refresh() after toggle, unit tests
+<!-- Add feature goals here -->
 
 ## Notes
 
-- Prisma schema already has `isFavorite` on Item and Collection - no migration needed
-- UI buttons/icons already exist but have no onClick handlers
-- Star filled yellow (#eab308) when active (existing styling in place)
-- Follow existing patterns: Zod validation, ownership checks, { success, data, error } return
+<!-- Add notes and constraints here -->
 
 ## History
+
+- **Favorite Toggle** - toggleItemFavorite and toggleCollectionFavorite db queries and server actions with ownership checks and Zod validation, wired up ItemDrawer favorite button with optimistic state update, CollectionCard dropdown Favorite/Unfavorite menu item, CollectionActions star button on collection detail page, toast feedback, router.refresh(), 10 new unit tests (Completed)
+
 
 - **Favorites Page** - Star icon in TopBar linking to /favorites, getFavoriteItems and getFavoriteCollections db queries, FavoriteItemRow and FavoriteCollectionRow components with compact VS Code/terminal-style rows, /favorites page with separate items/collections sections, click item opens ItemDrawer, click collection navigates to detail, empty state (Completed)
 
