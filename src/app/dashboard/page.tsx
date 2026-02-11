@@ -8,6 +8,7 @@ import PinnedItems from '@/components/dashboard/pinned-items';
 import RecentItems from '@/components/dashboard/recent-items';
 import { getRecentCollections, getSidebarCollections } from '@/lib/db/collections';
 import { getPinnedItems, getRecentItems, getDashboardStats, getItemTypesWithCounts } from '@/lib/db/items';
+import { getEditorPreferences } from '@/lib/db/users';
 import { DASHBOARD_COLLECTIONS_LIMIT, DASHBOARD_RECENT_ITEMS_LIMIT } from '@/lib/constants/pagination';
 
 export default async function DashboardPage() {
@@ -22,7 +23,7 @@ export default async function DashboardPage() {
     select: { id: true, name: true, email: true, image: true },
   });
 
-  const [collections, pinnedItems, recentItems, stats, itemTypes, sidebarCollections] = user
+  const [collections, pinnedItems, recentItems, stats, itemTypes, sidebarCollections, editorPreferences] = user
     ? await Promise.all([
         getRecentCollections(user.id, DASHBOARD_COLLECTIONS_LIMIT),
         getPinnedItems(user.id),
@@ -30,14 +31,16 @@ export default async function DashboardPage() {
         getDashboardStats(user.id),
         getItemTypesWithCounts(user.id),
         getSidebarCollections(user.id),
+        getEditorPreferences(user.id),
       ])
-    : [[], [], [], { totalItems: 0, totalCollections: 0, favoriteItems: 0, favoriteCollections: 0 }, [], { favorites: [], recents: [] }];
+    : [[], [], [], { totalItems: 0, totalCollections: 0, favoriteItems: 0, favoriteCollections: 0 }, [], { favorites: [], recents: [] }, undefined];
 
   return (
     <DashboardLayout
       itemTypes={itemTypes}
       sidebarCollections={sidebarCollections}
       user={user}
+      editorPreferences={editorPreferences}
     >
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}

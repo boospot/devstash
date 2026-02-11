@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
 import DashboardLayout from '@/components/layout/dashboard-layout';
 import AccountSettings from '@/components/settings/account-settings';
+import EditorSettings from '@/components/settings/editor-settings';
 import { getSidebarCollections } from '@/lib/db/collections';
 import { getItemTypesWithCounts } from '@/lib/db/items';
 import { getUserWithSettings } from '@/lib/db/users';
@@ -30,6 +31,7 @@ export default async function SettingsPage() {
       itemTypes={itemTypesWithCounts}
       sidebarCollections={sidebarCollections}
       user={{ id: user.id, name: user.name, email: user.email, image: user.image }}
+      editorPreferences={user.editorPreferences}
     >
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
@@ -37,6 +39,9 @@ export default async function SettingsPage() {
           <h1 className="text-2xl font-bold text-foreground">Settings</h1>
           <p className="text-muted-foreground">Manage your account settings</p>
         </div>
+
+        {/* Editor Settings */}
+        <EditorSettings />
 
         {/* Account Settings */}
         <AccountSettings hasPassword={user.hasPassword} />

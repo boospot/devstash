@@ -58,6 +58,7 @@ export default async function ProfilePage() {
       itemTypes={itemTypesWithCounts}
       sidebarCollections={sidebarCollections}
       user={{ id: user.id, name: user.name, email: user.email, image: user.image }}
+      editorPreferences={user.editorPreferences}
     >
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}

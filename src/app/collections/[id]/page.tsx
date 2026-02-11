@@ -8,7 +8,7 @@ import CollectionActions from '@/components/collections/collection-actions';
 import Pagination from '@/components/shared/pagination';
 import { getSidebarCollections, getCollectionById } from '@/lib/db/collections';
 import { getItemTypesWithCounts, getItemsByCollection } from '@/lib/db/items';
-import { getUserById } from '@/lib/db/users';
+import { getUserById, getEditorPreferences } from '@/lib/db/users';
 import { getItemTypeIcon } from '@/lib/constants/item-types';
 import { ITEMS_PER_PAGE } from '@/lib/constants/pagination';
 import { Star } from 'lucide-react';
@@ -42,10 +42,11 @@ export default async function CollectionDetailPage({ params, searchParams }: Col
   // Parse page number (default to 1)
   const currentPage = Math.max(1, parseInt(pageParam || '1', 10) || 1);
 
-  const [paginatedItems, itemTypes, sidebarCollections] = await Promise.all([
+  const [paginatedItems, itemTypes, sidebarCollections, editorPreferences] = await Promise.all([
     getItemsByCollection(user.id, collectionId, currentPage, ITEMS_PER_PAGE),
     getItemTypesWithCounts(user.id),
     getSidebarCollections(user.id),
+    getEditorPreferences(user.id),
   ]);
 
   const { items, totalPages } = paginatedItems;
@@ -62,6 +63,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Col
       itemTypes={itemTypes}
       sidebarCollections={sidebarCollections}
       user={user}
+      editorPreferences={editorPreferences}
     >
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}

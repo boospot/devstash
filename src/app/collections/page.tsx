@@ -5,7 +5,7 @@ import CollectionCard from '@/components/dashboard/collection-card';
 import Pagination from '@/components/shared/pagination';
 import { getSidebarCollections, getAllCollections } from '@/lib/db/collections';
 import { getItemTypesWithCounts } from '@/lib/db/items';
-import { getUserById } from '@/lib/db/users';
+import { getUserById, getEditorPreferences } from '@/lib/db/users';
 import { COLLECTIONS_PER_PAGE } from '@/lib/constants/pagination';
 import { FolderOpen } from 'lucide-react';
 
@@ -30,10 +30,11 @@ export default async function CollectionsPage({ searchParams }: CollectionsPageP
   // Parse page number (default to 1)
   const currentPage = Math.max(1, parseInt(pageParam || '1', 10) || 1);
 
-  const [paginatedCollections, itemTypes, sidebarCollections] = await Promise.all([
+  const [paginatedCollections, itemTypes, sidebarCollections, editorPreferences] = await Promise.all([
     getAllCollections(user.id, currentPage, COLLECTIONS_PER_PAGE),
     getItemTypesWithCounts(user.id),
     getSidebarCollections(user.id),
+    getEditorPreferences(user.id),
   ]);
 
   const { collections, totalCount, totalPages } = paginatedCollections;
@@ -43,6 +44,7 @@ export default async function CollectionsPage({ searchParams }: CollectionsPageP
       itemTypes={itemTypes}
       sidebarCollections={sidebarCollections}
       user={user}
+      editorPreferences={editorPreferences}
     >
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
