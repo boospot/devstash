@@ -2,15 +2,24 @@
 
 ## Status
 
-Not Started
+In Progress
 
 ## Goals
 
-<!-- Add feature goals here -->
+- Fix top bar overflow on mobile (header is 590px, overflows 320-375px viewports)
+- Hide "DevStash" logo text below `sm`, keep the "DS" badge only
+- Collapse search bar to icon-only below `sm`, still opens command palette on tap
+- Replace "New Collection" and "New Item" buttons with a single "+" dropdown menu on mobile (below `sm`)
+- Keep Favorites star visible at all sizes
+- Target mobile top bar layout: `☰  [DS]  🔍  ☆  +`
 
 ## Notes
 
-<!-- Add notes and constraints here -->
+- Actions div (Favorites, New Collection, New Item) is entirely off-screen on mobile
+- No overflow-hidden on header, so content silently overflows
+- At 768px (tablet) it fits fine, issue is below ~640px
+- Use shadcn DropdownMenu for the "+" button
+- Show full layout (text buttons, search bar, logo text) at `sm` (640px) and above
 
 ## History
 
