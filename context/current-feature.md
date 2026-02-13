@@ -1,29 +1,16 @@
-# Current Feature: Stripe Phase 2 (Webhooks, Feature Gating & UI)
+# Current Feature
 
 ## Status
 
-In Progress
+Not Started
 
 ## Goals
 
-- Handle Stripe webhook events to sync subscription status to database
-- Gate item creation behind free tier limits (50 items)
-- Gate collection creation behind free tier limits (3 collections)
-- Gate file/image uploads behind Pro check
-- Add billing section to settings page with usage display and upgrade/manage buttons
-- Show upgrade success toast after checkout redirect
+<!-- Add feature goals here -->
 
 ## Notes
 
-- Requires Stripe CLI for local webhook testing (`stripe listen --forward-to localhost:3000/api/webhooks/stripe`)
-- Webhook route uses `request.text()` for raw body - no special Next.js config needed
-- `updateMany` in webhook handlers for idempotent duplicate event handling
-- Payment failures only log warnings - Stripe retries automatically, downgrade only on `subscription.deleted`
-- `checkout.session.completed` uses `metadata.userId`; other handlers use `stripeCustomerId`
-- Customer/subscription fields may be string or object - handle both with typeof checks
-- New files: `src/app/api/webhooks/stripe/route.ts`, `src/components/settings/billing-settings.tsx`
-- Modified files: `src/actions/items.ts`, `src/actions/collections.ts`, `src/app/api/upload/route.ts`, `src/app/settings/page.tsx`
-- Full spec: `context/features/stripe-phase-2-spec.md`
+<!-- Add notes and constraints here -->
 
 ## History
 
@@ -86,3 +73,4 @@ In Progress
 - **Top Bar Mobile Responsive** - Fixed top bar overflow on mobile (590px content in 320-375px viewport), hide "DevStash" logo text below sm keeping DS badge, collapse search bar to icon-only on mobile still opening command palette, replace New Item/New Collection buttons with single + icon DropdownMenu on mobile, reduced gap/padding for small screens, shrink-0 on fixed elements, full layout preserved at sm+ breakpoint (Completed)
 - **Auth Nav & Dashboard Logo** - Added homepage Navbar to all auth pages (sign-in, register, verify-email, forgot-password, reset-password) via shared (auth)/layout.tsx, replaced DS blue box in dashboard TopBar with FolderOpen icon matching homepage nav, fixed Navbar anchor links to absolute paths (/#features, /#pricing), adjusted auth page min-height for navbar offset (Completed)
 - **Stripe Phase 1 (Core Infrastructure)** - Stripe SDK initialization in src/lib/stripe.ts, usage limit utilities (MAX_ITEMS=50, MAX_COLLECTIONS=3 for free tier) with getUserUsage/canCreateItem/canCreateCollection in src/lib/usage.ts, 9 unit tests, isPro added to NextAuth session/JWT types with DB sync in auth callbacks, checkout session API route (POST /api/stripe/checkout) with monthly/yearly plan-to-priceId mapping and find-or-create Stripe customer, customer portal API route (POST /api/stripe/portal), .env.example with Stripe env vars (Completed)
+- **Stripe Phase 2 (Webhooks, Feature Gating & UI)** - Stripe webhook handler at /api/webhooks/stripe for checkout.session.completed, invoice.paid, invoice.payment_failed, customer.subscription.updated, customer.subscription.deleted with idempotent updateMany and typeof checks, feature gating on createItem (Pro type check for file/image + 50 item limit), createCollection (3 collection limit), upload route (Pro DB check with 403), BillingSettings component with plan badge, usage counts, upgrade buttons ($8/mo and $72/yr), manage billing portal, upgrade success toast via useSearchParams, wired into settings page between editor and account sections, 4 new unit tests (Completed)
