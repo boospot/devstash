@@ -7,6 +7,7 @@ interface ItemDrawerContextValue {
   isOpen: boolean;
   item: ItemDetail | null;
   isLoading: boolean;
+  isPro: boolean;
   openDrawer: (itemId: string) => void;
   closeDrawer: () => void;
   setItem: (item: ItemDetail) => void;
@@ -24,8 +25,10 @@ export function useItemDrawer() {
 
 export default function ItemDrawerProvider({
   children,
+  isPro = false,
 }: {
   children: React.ReactNode;
+  isPro?: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [item, setItem] = useState<ItemDetail | null>(null);
@@ -61,7 +64,7 @@ export default function ItemDrawerProvider({
 
   return (
     <ItemDrawerContext.Provider
-      value={{ isOpen, item, isLoading, openDrawer, closeDrawer, setItem: updateItem }}
+      value={{ isOpen, item, isLoading, isPro, openDrawer, closeDrawer, setItem: updateItem }}
     >
       {children}
     </ItemDrawerContext.Provider>

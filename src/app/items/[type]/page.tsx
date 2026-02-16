@@ -70,6 +70,7 @@ export default async function ItemsPage({ params, searchParams }: ItemsPageProps
       sidebarCollections={sidebarCollections}
       user={user}
       editorPreferences={editorPreferences}
+      isPro={user.isPro}
     >
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
@@ -77,6 +78,7 @@ export default async function ItemsPage({ params, searchParams }: ItemsPageProps
           typeName={typeName}
           displayName={displayName}
           itemCount={totalCount}
+          isPro={user.isPro}
         />
 
         {/* Items Grid/List */}

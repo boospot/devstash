@@ -75,7 +75,7 @@ export default function DashboardLayout({
           />
 
           {/* Main Content */}
-          <ItemDrawerProvider>
+          <ItemDrawerProvider isPro={isPro}>
             {editorPreferences ? (
               <EditorPreferencesProvider initialPreferences={editorPreferences}>
                 {content}

@@ -29,11 +29,13 @@ import CodeEditor from "./code-editor";
 import MarkdownEditor from "./markdown-editor";
 import FileUpload from "./file-upload";
 import CollectionPicker, { type CollectionOption } from "./collection-picker";
+import SuggestTagsButton from "./suggest-tags-button";
 
 interface NewItemDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   defaultType?: ItemTypeName;
+  isPro?: boolean;
 }
 
 export type ItemTypeName = "snippet" | "prompt" | "command" | "note" | "link" | "file" | "image";
@@ -48,7 +50,7 @@ const ITEM_TYPES: { value: ItemTypeName; label: string; icon: string; isPro?: bo
   { value: "image", label: "Image", icon: "Image", isPro: true },
 ];
 
-export default function NewItemDialog({ open, onOpenChange, defaultType }: NewItemDialogProps) {
+export default function NewItemDialog({ open, onOpenChange, defaultType, isPro }: NewItemDialogProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [typeName, setTypeName] = useState<ItemTypeName>(defaultType || "snippet");
@@ -299,7 +301,26 @@ export default function NewItemDialog({ open, onOpenChange, defaultType }: NewIt
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="tags">Tags</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="tags">Tags</Label>
+              {isPro && (
+                <SuggestTagsButton
+                  title={title}
+                  content={content || null}
+                  language={language || null}
+                  typeName={typeName}
+                  existingTags={tagsInput.split(",").map((t) => t.trim()).filter((t) => t.length > 0)}
+                  onAcceptTag={(tag) => {
+                    setTagsInput((prev) => {
+                      const trimmed = prev.trim();
+                      if (!trimmed) return tag;
+                      return trimmed.endsWith(",") ? `${trimmed} ${tag}` : `${trimmed}, ${tag}`;
+                    });
+                  }}
+                  disabled={isLoading}
+                />
+              )}
+            </div>
             <Input
               id="tags"
               value={tagsInput}
