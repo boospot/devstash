@@ -1,16 +1,28 @@
-# Current Feature
+# Current Feature: AI Description Generator
 
 ## Status
 
-Not Started
+In Progress
 
 ## Goals
 
-<!-- Goals will be populated when a feature is loaded -->
+- Add an icon button next to the description input that generates a concise 1-2 sentence description/summary using AI
+- Works in both NewItemDialog (create) and ItemDrawer edit mode
+- Uses currently entered content (title, content/URL, language, type) — no need to save first
+- Works for all content types (snippets, prompts, commands, notes, links) using whatever info is available
+- Uses the existing OpenAI integration (gpt-5-nano)
+- Pro-only feature (matches AI auto-tagging pattern)
+- Server action with auth/Pro gating, Zod validation, and rate limiting
+- Unit tests for the server action
 
 ## Notes
 
-<!-- Notes will be populated when a feature is loaded -->
+- Follow the same pattern as generateAutoTags (server action, Pro gating, rate limiting)
+- The button should appear next to/near the description input field
+- Should send the title, content (or URL for links), type, and language to the AI
+- AI returns a 1-2 sentence description that populates the description field
+- Truncate content to ~2000 chars before sending (same as auto-tags)
+- Show loading state on the button while generating
 
 ## History
 
