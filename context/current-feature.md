@@ -1,27 +1,16 @@
-# Current Feature: AI Prompt Optimizer
+# Current Feature
 
 ## Status
 
-In Progress
+Not Started
 
 ## Goals
 
-- Add `optimizePrompt` server action in `src/actions/ai.ts` with auth/Pro gating, Zod validation, rate limiting (reuse existing patterns from `explainCode`/`generateDescription`)
-- Add `showOptimize`, `isPro`, `title`, and `onAcceptOptimized` props to MarkdownEditor for prompt types in read-only mode (mirrors CodeEditor's `showExplain` pattern)
-- Add "Optimize" button (Sparkles icon) in the MarkdownEditor header via `extraButtons` prop on EditorHeader, with Crown icon + tooltip for free users
-- After optimizing, show Original/Optimized tabs in the MarkdownEditor (like Code/Explain tabs in CodeEditor)
-- Show an "Use This" button on the Optimized tab that calls `onAcceptOptimized` to update the item's content via the existing `updateItem` server action
-- Wire up in ItemDrawer: pass `showOptimize`, `isPro`, `title`, and `onAcceptOptimized` handler to MarkdownEditor for prompt type items in read-only view mode
-- The `onAcceptOptimized` handler should save the optimized prompt to the item, show a toast, and refresh the page
-- Write unit tests for the `optimizePrompt` server action
+<!-- Goals will be populated when a feature is loaded -->
 
 ## Notes
 
-- Follow the exact same pattern as "Explain" in CodeEditor (`showExplain` / `extraButtons` / tabs / Crown tooltip)
-- The MarkdownEditor needs `extraButtons` added to its EditorHeader usage (it doesn't have it currently)
-- Only show Optimize for `prompt` type items (not notes), in read-only mode (item drawer view mode)
-- AI prompt: "You are a prompt engineering expert. Analyze the following prompt and return an improved version. Make it clearer, more specific, and more effective. Preserve the original intent. Return a JSON object with an `optimizedPrompt` key."
-- Truncate content to 2000 chars (existing MAX_CONTENT_LENGTH)
+<!-- Notes will be populated when a feature is loaded -->
 
 ## History
 
@@ -83,3 +72,4 @@ In Progress
 - **AI Auto-Tagging** - OpenAI client utility (gpt-5-nano via Responses API), generateAutoTags server action with auth/Pro gating/Zod validation/rate limiting (20 req/hr), SuggestTagsButton component with accept/reject badge controls, integrated in NewItemDialog and ItemDrawer edit mode (Pro-only), isPro prop threaded through DashboardLayout/TopBar/ItemsPageHeader/ItemDrawerProvider, content truncation to 2000 chars, handles both {tags:[...]} and [...] response formats, normalizes to lowercase with dedup, 13 unit tests (Completed)
 - **AI Description Generator** - generateDescription server action with auth/Pro gating/Zod validation/rate limiting, GenerateDescriptionButton component with "Describe" label and Sparkles icon, integrated next to Description label in NewItemDialog and ItemDrawer edit mode (Pro-only), uses title/content/URL/language/type context with 2000 char truncation, handles {description:"..."} and plain string AI response formats, 12 new unit tests (Completed)
 - **AI Explain Code** - explainCode server action with auth/Pro gating/Zod validation/rate limiting, Explain button (Sparkles icon) in code editor header for snippet/command types in item drawer read mode, Code/Explain tab interface after generating, markdown-rendered explanation in same container, Crown icon + tooltip for free users (Pro gating UI), Loader2 spinner during generation, error toasts, TooltipProvider in dashboard layout, extraButtons prop on EditorHeader, 12 new unit tests (Completed)
+- **AI Prompt Optimizer** - optimizePrompt server action with auth/Pro gating/Zod validation/rate limiting, Optimize button (Sparkles icon) in MarkdownEditor header for prompt types in item drawer read mode, Original/Optimized tab interface after generating, "Use This" button (Check icon, emerald green) to accept and save optimized prompt via updateItem, Crown icon + tooltip for free users (Pro gating UI), extraButtons prop added to MarkdownEditor's EditorHeader, 12 new unit tests (Completed)
