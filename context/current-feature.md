@@ -1,16 +1,34 @@
-# Current Feature
+# Current Feature: Component Refactor
 
 ## Status
 
-Not Started
+In Progress
 
 ## Goals
 
-<!-- Goals will be populated when a feature is loaded -->
+### High Impact
+- Extract `ConfirmDeleteDialog` from delete-item-dialog.tsx and delete-collection-dialog.tsx (~75 lines saved)
+- Extract `SidebarNav` from sidebar.tsx and mobile-sidebar.tsx (~80 lines saved)
+- Extract shared pricing constants (`PRO_FEATURES`/`FREE_FEATURES`) into `src/lib/constants/pricing.ts` and `startCheckout` utility into `src/lib/stripe-client.ts` from billing-settings.tsx and upgrade-pricing.tsx (~40 lines saved, fixes PRO_FEATURES divergence bug)
+
+### Medium Impact
+- Extract `DialogFormFooter` (Cancel + Submit with Loader2) from 4 dialog components (~40 lines saved)
+- Extract `ProAiButton` (Sparkles/Crown/Loader2 Pro-gated button) from code-editor.tsx and markdown-editor.tsx (~35 lines saved)
+- Extract `UserMenu` (Profile/Settings/Sign out dropdown) from sidebar.tsx and mobile-sidebar.tsx (~35 lines saved)
+
+### Low Impact
+- Extract `IconCircle` (colored icon in tinted circle) from 5 components (~20 lines saved)
+- Extract `GitHubAuthSection` (divider + GitHub OAuth button) from sign-in-form.tsx and register-form.tsx (~16 lines saved)
+- Extract `FormError` (red error box) from 3 auth form components (~12 lines saved)
+- Extract `SortableSection` (header + sort dropdown + bordered list shell) from both favorites list components (~25 lines saved)
 
 ## Notes
 
-<!-- Notes will be populated when a feature is loaded -->
+- Pure refactor — no behavior changes except fixing the PRO_FEATURES divergence bug (upgrade-pricing.tsx missing "AI Prompt Optimizer")
+- New shared components go in `src/components/shared/`
+- New constants go in `src/lib/constants/pricing.ts`
+- New utility goes in `src/lib/stripe-client.ts`
+- Estimated ~280-320 lines eliminated total
 
 ## History
 

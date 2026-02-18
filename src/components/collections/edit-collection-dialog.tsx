@@ -8,11 +8,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Loader2, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
+import DialogFormFooter from "@/components/shared/dialog-form-footer";
 import { toast } from "sonner";
 import { updateCollection, type UpdateCollectionInput } from "@/actions/collections";
 
@@ -120,20 +120,7 @@ export default function EditCollectionDialog({
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleClose}
-              disabled={isLoading}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isLoading}>
-              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Save
-            </Button>
-          </div>
+          <DialogFormFooter isLoading={isLoading} onCancel={handleClose} submitLabel="Save" />
         </form>
       </DialogContent>
     </Dialog>

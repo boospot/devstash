@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import FormError from "@/components/shared/form-error";
 
 export function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
@@ -96,11 +97,7 @@ export function ForgotPasswordForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {error && (
-          <div className="mb-4 rounded-md bg-destructive/10 p-3 text-sm text-destructive">
-            {error}
-          </div>
-        )}
+        <FormError message={error} />
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">

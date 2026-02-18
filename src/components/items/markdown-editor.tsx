@@ -3,16 +3,12 @@
 import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Sparkles, Crown, Loader2, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { useClipboard } from "@/hooks/use-clipboard";
 import EditorHeader from "./editor-header";
 import { optimizePrompt } from "@/actions/ai";
 import { toast } from "sonner";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import ProAiButton from "@/components/shared/pro-ai-button";
 
 interface MarkdownEditorProps {
   value: string;
@@ -122,52 +118,26 @@ export default function MarkdownEditor({
 
   // Build extra buttons for the header
   const extraButtons = showOptimize ? (
-    isPro ? (
-      <div className="flex items-center gap-2">
-        {activeTab === "optimized" && optimizedContent && onAcceptOptimized && (
-          <button
-            type="button"
-            onClick={handleAccept}
-            className="flex items-center gap-1.5 text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
-            title="Use optimized prompt"
-          >
-            <Check className="h-3.5 w-3.5" />
-            <span>Use This</span>
-          </button>
-        )}
+    <div className="flex items-center gap-2">
+      {isPro && activeTab === "optimized" && optimizedContent && onAcceptOptimized && (
         <button
           type="button"
-          onClick={handleOptimize}
-          disabled={isOptimizing}
-          className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
-          title="Optimize prompt"
+          onClick={handleAccept}
+          className="flex items-center gap-1.5 text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
+          title="Use optimized prompt"
         >
-          {isOptimizing ? (
-            <>
-              <Loader2 className="h-3.5 w-3.5 animate-spin" />
-              <span>Optimizing...</span>
-            </>
-          ) : (
-            <>
-              <Sparkles className="h-3.5 w-3.5" />
-              <span>Optimize</span>
-            </>
-          )}
+          <Check className="h-3.5 w-3.5" />
+          <span>Use This</span>
         </button>
-      </div>
-    ) : (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <span className="flex items-center gap-1.5 text-sm text-muted-foreground/50 cursor-not-allowed">
-            <Crown className="h-3.5 w-3.5" />
-            <span>Optimize</span>
-          </span>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>AI features require Pro subscription</p>
-        </TooltipContent>
-      </Tooltip>
-    )
+      )}
+      <ProAiButton
+        isPro={isPro}
+        label="Optimize"
+        loadingLabel="Optimizing..."
+        isLoading={isOptimizing}
+        onClick={handleOptimize}
+      />
+    </div>
   ) : null;
 
   // Determine which content to show in the preview/readonly area
