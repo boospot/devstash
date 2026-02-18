@@ -1,16 +1,24 @@
-# Current Feature
+# Current Feature: Action Utils Refactor
 
 ## Status
 
-Not Started
+In Progress
 
 ## Goals
 
-<!-- Goals will be populated when a feature is loaded -->
+- Extract `getAuthedSession()` helper into `src/lib/action-utils.ts` to replace the auth check pattern repeated 12+ times across all action files (~50 lines saved)
+- Extract `requirePro()` helper into `src/lib/action-utils.ts` to replace Pro gating check repeated 4 times in `src/actions/ai.ts` (~16 lines saved)
+- Extract `checkAiRateLimit()` helper into `src/lib/action-utils.ts` to replace rate limit check repeated 4 times in `src/actions/ai.ts` (~32 lines saved)
+- Add `validateId()` helper to `src/lib/validation.ts` to replace 5 single-field ID validation schemas across `src/actions/items.ts` and `src/actions/collections.ts` (~15 lines saved)
+- Extract shared `ActionResult<T>` interface into `src/lib/action-utils.ts` to replace duplicated definitions in items.ts and collections.ts
+- Refactor all action files to use the new helpers
+- Ensure all existing tests pass after refactor
 
 ## Notes
 
-<!-- Notes will be populated when a feature is loaded -->
+- New file: `src/lib/action-utils.ts` for auth, pro gating, rate limit, and ActionResult helpers
+- Existing file: `src/lib/validation.ts` gets the `validateId()` helper
+- This is a pure refactor — no behavior changes
 
 ## History
 
