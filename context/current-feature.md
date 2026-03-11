@@ -14,6 +14,9 @@ Not Started
 
 ## History
 
+- **Vercel Analytics** - Installed @vercel/analytics package, added Analytics component to root layout for page view tracking across all pages (Completed)
+
+
 - **Language Selector Dropdown** - Replaced free-text language input with Select dropdown (31 languages) in NewItemDialog and ItemDrawer edit mode, moved language selector above content editor for immediate syntax highlighting as user types, LANGUAGES constant in editor.ts (Completed)
 
 - **Initial Setup** - Next.js 16, Tailwind CSS v4, TypeScript configured (Completed)
