@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
-import { stripe } from '@/lib/stripe'
+import { getStripeClient } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 
 const PRICE_MAP: Record<string, string | undefined> = {
@@ -10,6 +10,7 @@ const PRICE_MAP: Record<string, string | undefined> = {
 
 export async function POST(request: Request) {
   try {
+    const stripe = getStripeClient()
     const session = await auth()
 
     if (!session?.user?.id) {

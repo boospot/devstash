@@ -1,9 +1,10 @@
-import { resend } from './resend'
+import { getResendClient } from './resend'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 const FROM_EMAIL = 'DevStash <noreply@devstash.io>'
 
 export async function sendVerificationEmail(email: string, token: string) {
+  const resend = getResendClient()
   const verificationUrl = `${APP_URL}/verify-email?token=${token}`
 
   const { data, error } = await resend.emails.send({
@@ -52,6 +53,7 @@ export async function sendVerificationEmail(email: string, token: string) {
 }
 
 export async function sendPasswordResetEmail(email: string, token: string) {
+  const resend = getResendClient()
   const resetUrl = `${APP_URL}/reset-password?token=${token}`
 
   const { data, error } = await resend.emails.send({

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { stripe } from '@/lib/stripe'
+import { getStripeClient } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 import type Stripe from 'stripe'
 
@@ -90,6 +90,7 @@ async function handleSubscriptionDeleted(
 }
 
 export async function POST(request: Request) {
+  const stripe = getStripeClient()
   const body = await request.text()
   const signature = request.headers.get('stripe-signature')
 

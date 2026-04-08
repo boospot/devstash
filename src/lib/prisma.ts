@@ -2,16 +2,14 @@ import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '@/generated/prisma/client'
 
+const FALLBACK_DATABASE_URL = 'postgresql://devstash:devstash@localhost:5432/devstash'
+
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
 function createPrismaClient() {
-  const connectionString = process.env.DATABASE_URL
-
-  if (!connectionString) {
-    throw new Error('DATABASE_URL environment variable is not set')
-  }
+  const connectionString = process.env.DATABASE_URL || FALLBACK_DATABASE_URL
 
   const pool = new Pool({ connectionString })
   const adapter = new PrismaPg(pool)
