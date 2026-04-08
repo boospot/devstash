@@ -5,11 +5,34 @@ import { headers } from 'next/headers'
 // Create Redis client (lazy initialization)
 let redis: Redis | null = null
 
+function normalizeUpstashUrl(input: string | undefined): string | null {
+  if (!input) return null
+
+  try {
+    const parsed = new URL(input)
+
+    if (parsed.protocol === 'https:' || parsed.protocol === 'http:') {
+      return input
+    }
+
+    // Support accidental redis/rediss endpoint input by converting to REST host.
+    if (parsed.protocol === 'redis:' || parsed.protocol === 'rediss:') {
+      return `https://${parsed.host}`
+    }
+  } catch {
+    return null
+  }
+
+  return null
+}
+
 function getRedis(): Redis | null {
   if (redis) return redis
 
-  const url = process.env.UPSTASH_REDIS_REST_URL
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN
+  const url = normalizeUpstashUrl(
+    process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL
+  )
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN
 
   if (!url || !token) {
     console.warn('Upstash Redis not configured - rate limiting disabled')

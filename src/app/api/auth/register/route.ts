@@ -68,10 +68,34 @@ export async function POST(request: Request) {
       },
     });
 
+    const isProduction = process.env.NODE_ENV === 'production';
+
     // Generate verification token and send email (unless skipped)
     if (!skipVerification) {
-      const token = await generateVerificationToken(email);
-      await sendVerificationEmail(email, token);
+      try {
+        const token = await generateVerificationToken(email);
+        await sendVerificationEmail(email, token);
+      } catch (emailError) {
+        console.error('Verification email send failed:', emailError);
+
+        if (!isProduction) {
+          // Local/dev fallback so signup can proceed without a configured sender domain.
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { emailVerified: new Date() },
+          });
+        } else {
+          // Avoid leaving a stuck unverified account when email delivery fails in production.
+          await prisma.user.delete({
+            where: { id: user.id },
+          });
+
+          return NextResponse.json(
+            { error: 'Could not send verification email. Please try again.' },
+            { status: 503 },
+          );
+        }
+      }
     }
 
     return NextResponse.json(
@@ -79,7 +103,9 @@ export async function POST(request: Request) {
         success: true,
         message: skipVerification
           ? 'Account created successfully'
-          : 'Please check your email to verify your account',
+          : !isProduction
+            ? 'Account created successfully (email verification bypassed in local development)'
+            : 'Please check your email to verify your account',
         user: {
           id: user.id,
           name: user.name,

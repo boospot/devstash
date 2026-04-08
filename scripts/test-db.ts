@@ -1,7 +1,10 @@
-import 'dotenv/config'
+import { config as loadEnv } from 'dotenv'
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '../src/generated/prisma/client'
+
+loadEnv({ path: '.env.local' })
+loadEnv()
 
 async function main() {
   const connectionString = process.env.DATABASE_URL

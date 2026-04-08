@@ -1,10 +1,19 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { getItemTypeIcon } from "@/lib/constants/item-types";
 import { formatRelativeDate } from "@/lib/utils/date";
 import { useItemDrawer } from "@/components/items/item-drawer-provider";
 import type { ItemWithType } from "@/lib/db/items";
+import {
+  Code,
+  File,
+  Image as ImageIcon,
+  Link as LinkIcon,
+  Sparkles,
+  StickyNote,
+  Terminal,
+} from "lucide-react";
+import type { CSSProperties } from "react";
 
 interface FavoriteItemRowProps {
   item: ItemWithType;
@@ -12,8 +21,28 @@ interface FavoriteItemRowProps {
 
 export default function FavoriteItemRow({ item }: FavoriteItemRowProps) {
   const { openDrawer } = useItemDrawer();
-  const IconComponent = getItemTypeIcon(item.itemType.icon);
   const iconColor = item.itemType.color;
+  const style: CSSProperties = { color: iconColor };
+
+  const renderIcon = () => {
+    switch (item.itemType.icon) {
+      case "Sparkles":
+        return <Sparkles className="h-4 w-4 shrink-0" style={style} />;
+      case "Terminal":
+        return <Terminal className="h-4 w-4 shrink-0" style={style} />;
+      case "StickyNote":
+        return <StickyNote className="h-4 w-4 shrink-0" style={style} />;
+      case "File":
+        return <File className="h-4 w-4 shrink-0" style={style} />;
+      case "Image":
+        return <ImageIcon className="h-4 w-4 shrink-0" style={style} />;
+      case "Link":
+        return <LinkIcon className="h-4 w-4 shrink-0" style={style} />;
+      case "Code":
+      default:
+        return <Code className="h-4 w-4 shrink-0" style={style} />;
+    }
+  };
 
   return (
     <button
@@ -21,10 +50,7 @@ export default function FavoriteItemRow({ item }: FavoriteItemRowProps) {
       onClick={() => openDrawer(item.id)}
       className="w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-muted/50 transition-colors rounded-sm group"
     >
-      <IconComponent
-        className="h-4 w-4 shrink-0"
-        style={{ color: iconColor }}
-      />
+      {renderIcon()}
       <span className="flex-1 min-w-0 font-mono text-sm text-foreground truncate">
         {item.title}
       </span>

@@ -5,60 +5,49 @@ import { useItemDrawer } from '@/components/items/item-drawer-provider';
 import { formatRelativeDate } from '@/lib/utils/date';
 import { formatFileSize } from '@/lib/r2';
 import type { ItemWithType } from '@/lib/db/items';
+import type { CSSProperties } from 'react';
 
 interface FileListRowProps {
   item: ItemWithType;
 }
 
-/**
- * Get icon component based on file extension
- */
-function getFileIcon(fileName: string | null) {
-  if (!fileName) return File;
+function FileTypeIcon({
+  fileName,
+  iconColor,
+}: {
+  fileName: string | null;
+  iconColor: string;
+}) {
+  const style: CSSProperties = { color: iconColor };
+  const ext = fileName?.split('.').pop()?.toLowerCase() || '';
 
-  const ext = fileName.split('.').pop()?.toLowerCase() || '';
-
-  // Document types
   if (['pdf', 'doc', 'docx', 'txt', 'rtf', 'odt'].includes(ext)) {
-    return FileText;
+    return <FileText className="h-5 w-5" style={style} />;
   }
-
-  // Image types
   if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'ico'].includes(ext)) {
-    return FileImage;
+    return <FileImage className="h-5 w-5" style={style} />;
   }
-
-  // Video types
   if (['mp4', 'mov', 'avi', 'mkv', 'webm', 'wmv'].includes(ext)) {
-    return FileVideo;
+    return <FileVideo className="h-5 w-5" style={style} />;
   }
-
-  // Audio types
   if (['mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a'].includes(ext)) {
-    return FileAudio;
+    return <FileAudio className="h-5 w-5" style={style} />;
   }
-
-  // Archive types
   if (['zip', 'rar', '7z', 'tar', 'gz', 'bz2'].includes(ext)) {
-    return FileArchive;
+    return <FileArchive className="h-5 w-5" style={style} />;
   }
-
-  // Code types
   if (['js', 'ts', 'jsx', 'tsx', 'py', 'rb', 'go', 'rs', 'java', 'c', 'cpp', 'h', 'css', 'scss', 'html', 'json', 'xml', 'yaml', 'yml', 'md', 'sh', 'sql'].includes(ext)) {
-    return FileCode;
+    return <FileCode className="h-5 w-5" style={style} />;
   }
-
-  // Spreadsheet types
   if (['xls', 'xlsx', 'csv', 'ods'].includes(ext)) {
-    return FileSpreadsheet;
+    return <FileSpreadsheet className="h-5 w-5" style={style} />;
   }
 
-  return File;
+  return <File className="h-5 w-5" style={style} />;
 }
 
 export default function FileListRow({ item }: FileListRowProps) {
   const { openDrawer } = useItemDrawer();
-  const FileIcon = getFileIcon(item.fileName);
   const iconColor = item.itemType.color;
 
   const handleDownload = (e: React.MouseEvent) => {
@@ -88,7 +77,7 @@ export default function FileListRow({ item }: FileListRowProps) {
         className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
         style={{ backgroundColor: `${iconColor}20` }}
       >
-        <FileIcon className="h-5 w-5" style={{ color: iconColor }} />
+        <FileTypeIcon fileName={item.fileName} iconColor={iconColor} />
       </div>
 
       {/* File Info - Desktop */}

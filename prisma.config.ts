@@ -1,7 +1,11 @@
-import 'dotenv/config'
-import { defineConfig, env } from 'prisma/config'
+import { config as loadEnv } from 'dotenv'
+import { defineConfig } from 'prisma/config'
 
 const FALLBACK_DATABASE_URL = 'postgresql://devstash:devstash@localhost:5432/devstash'
+
+// Prefer local developer env file, then fallback to .env.
+loadEnv({ path: '.env.local' })
+loadEnv()
 
 export default defineConfig({
   schema: './prisma/schema.prisma',
