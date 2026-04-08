@@ -12,12 +12,16 @@ function normalizeUpstashUrl(input: string | undefined): string | null {
     const parsed = new URL(input)
 
     if (parsed.protocol === 'https:' || parsed.protocol === 'http:') {
+      // Guard against accidentally using Redis TLS port on HTTP(S).
+      if (parsed.port === '6379') {
+        return `${parsed.protocol}//${parsed.hostname}`
+      }
       return input
     }
 
     // Support accidental redis/rediss endpoint input by converting to REST host.
     if (parsed.protocol === 'redis:' || parsed.protocol === 'rediss:') {
-      return `https://${parsed.host}`
+      return `https://${parsed.hostname}`
     }
   } catch {
     return null
@@ -156,7 +160,7 @@ export async function checkRateLimit(
     }
   } catch (error) {
     // Fail open on errors
-    console.error('Rate limit check failed:', error)
+    console.error('Rate limit check failed (verify UPSTASH_REDIS_REST_URL/TOKEN):', error)
     return {
       success: true,
       remaining: -1,
