@@ -43,9 +43,13 @@ export async function POST(request: Request) {
       })
     }
 
-    // Generate token and send email
+    // Generate token and send email. Do not reveal delivery failure to client.
     const token = await generatePasswordResetToken(email)
-    await sendPasswordResetEmail(email, token)
+    try {
+      await sendPasswordResetEmail(email, token)
+    } catch (emailError) {
+      console.error('Password reset email delivery failed:', emailError)
+    }
 
     return NextResponse.json({
       success: true,
